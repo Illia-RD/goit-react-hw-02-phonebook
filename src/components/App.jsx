@@ -1,4 +1,4 @@
-import Feedback  from 'components/Feedback/Feedback'
+import Phonebook from 'components/Phonebook/Phonebook'
 import { Box } from "components/utils/Box";
 
 export const App = () => {
@@ -11,7 +11,7 @@ export const App = () => {
       borderRadius="normal"
       boxShadow="shadow"
       as="div">
-      <Feedback />
+      <Phonebook />
     </Box>
   );
 };

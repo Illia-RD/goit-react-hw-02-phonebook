@@ -10,15 +10,11 @@ class Phonebook extends Component {
     filter: ''
     }
 
-    // feedbackCounter = (e) => this.setState(prevState => {
-    //     const { name } = e.target
-    //     return { [name]: prevState[name] + 1 };
-    // })
-    idMaker = shortid.generate()
+  
    
     onSubmitHandler = (data) => {
       const alreadyInContacts =  this.state.contacts.map(contact => {
-          if (contact.name.toLowerCase() === data.name.toLowerCase()) {
+        if (contact.name.toLowerCase() === data.name.toLowerCase()) {
               alert(`${contact.name} is already in contacts.`)
               return "yes"
           }
@@ -62,7 +58,7 @@ class Phonebook extends Component {
                 <ContactForm onSubmit={this.onSubmitHandler } />
                 <h2 >Contact</h2>
                 <Filter value={this.state.filter} onChange={this.filterChanger} name={'filter'} />
-                <ContactList filter={this.state.filter} contacts={this.state.contacts} filterByName={this.filterByName} onClickBtn={this.onClickContactRemove} />
+                <ContactList  filterByName={this.filterByName} onClickBtn={this.onClickContactRemove} />
 
 
 

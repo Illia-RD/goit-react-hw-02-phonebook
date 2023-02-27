@@ -1,71 +1,72 @@
-import React, { Component } from "react";
-import  shortid   from 'shortid'
-import ContactForm from 'components/ContactForm/ContactForm'
-import Filter from 'components/Filter/Filter'
-import ContactList from "components/ContactList/ContactList";
+import React, { Component } from 'react';
+import shortid from 'shortid';
+import ContactForm from 'components/ContactForm/ContactForm';
+import Filter from 'components/Filter/Filter';
+import ContactList from 'components/ContactList/ContactList';
 import { PropTypes } from 'prop-types';
 class Phonebook extends Component {
-
-    state = {
+  state = {
     contacts: [],
-    filter: ''
+    filter: '',
+  };
+
+  onSubmitHandler = data => {
+    const alreadyInContacts = this.state.contacts.map(contact => {
+      if (contact.name.toLowerCase() === data.name.toLowerCase()) return 'yes';
+      return 'no';
+    });
+
+    if (alreadyInContacts.includes('yes')) {
+      return alert(`${data.name} is already in contacts.`);
+    } else {
+      this.setState(prevState => {
+        const contact = {
+          id: shortid.generate(),
+          name: data.name,
+          number: data.number,
+        };
+        return { contacts: [...prevState.contacts, contact] };
+      });
     }
+  };
 
-  
-   
-    onSubmitHandler = (data) => {
-      const alreadyInContacts =  this.state.contacts.map(contact => {
-          if (contact.name.toLowerCase() === data.name.toLowerCase()) {
-              alert(`${contact.name} is already in contacts.`)
-              return "yes"
-          }
-          return 'no'
-      })
-        
-        if (alreadyInContacts.includes("yes")) return
-        else {
-            this.setState(prevState => {
-                const contact = { id: shortid.generate(), name: data.name, number: data.number }
-                return { contacts: [...(prevState.contacts), contact] }
-                
-            })
-        }
-    }
-    
-    onClickContactRemove = (e) => {
-        this.setState(prevState => {
-            const newContacts = prevState.contacts.filter(contact => contact.id !== e.target.id)
-            return {contacts: newContacts}
-        })
-    }
+  onClickContactRemove = evt => {
+    this.setState(prevState => {
+      const newContacts = prevState.contacts.filter(
+        contact => contact.id !== evt.target.id
+      );
+      return { contacts: newContacts };
+    });
+  };
 
-    filterChanger = (e) => { 
-        this.setState({filter: e.target.value}
-       )
-    }
+  filterChanger = evt => {
+    this.setState({ filter: evt.target.value });
+  };
 
+  filterByName = () => {
+    return this.state.contacts.filter(contact =>
+      contact.name.toLowerCase().includes(this.state.filter.toLowerCase())
+    );
+  };
 
-    filterByName = () => {
-        return (
-        this.state.contacts.filter(contact => contact.name.toLowerCase().includes(this.state.filter.toLowerCase()))
-       )
-    }
-
-
-    render() {
-        return (
-            <>  
-                <h1 >Phonebook</h1>
-                <ContactForm onSubmit={this.onSubmitHandler } />
-                <h2 >Contact</h2>
-                <Filter value={this.state.filter} onChange={this.filterChanger} name={'filter'} />
-                <ContactList  filterByName={this.filterByName} onClickBtn={this.onClickContactRemove} />
-
-
-
-            </>
-        )
-    }
+  render() {
+    return (
+      <>
+        <h1>Phonebook</h1>
+        <ContactForm onSubmit={this.onSubmitHandler} />
+        <h2>Contact</h2>
+        <Filter
+          value={this.state.filter}
+          onChange={this.filterChanger}
+          name={'filter'}
+        />
+        <ContactList
+          filterByName={this.filterByName}
+          onClickBtn={this.onClickContactRemove}
+        />
+      </>
+    );
+  }
 }
 
 Phonebook.propTypes = {
@@ -82,4 +83,4 @@ Phonebook.propTypes = {
   filterName: PropTypes.func,
 };
 
-export default Phonebook
+export default Phonebook;

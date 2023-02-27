@@ -11,11 +11,10 @@ class Phonebook extends Component {
   };
 
   onSubmitHandler = data => {
-    let alreadyInContacts = this.state.contacts.find(
+    const alreadyInContacts = this.state.contacts.find(
       contact => contact.name.toLowerCase() === data.name.toLowerCase()
     );
 
-    console.log(alreadyInContacts);
     if (alreadyInContacts !== undefined) {
       return alert(`${data.name} is already in contacts.`);
     } else {

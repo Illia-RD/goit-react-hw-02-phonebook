@@ -3,6 +3,7 @@ import  shortid   from 'shortid'
 import ContactForm from 'components/ContactForm/ContactForm'
 import Filter from 'components/Filter/Filter'
 import ContactList from "components/ContactList/ContactList";
+import { PropTypes } from 'prop-types';
 class Phonebook extends Component {
 
     state = {
@@ -14,7 +15,7 @@ class Phonebook extends Component {
    
     onSubmitHandler = (data) => {
       const alreadyInContacts =  this.state.contacts.map(contact => {
-        if (contact.name.toLowerCase() === data.name.toLowerCase()) {
+          if (contact.name.toLowerCase() === data.name.toLowerCase()) {
               alert(`${contact.name} is already in contacts.`)
               return "yes"
           }
@@ -66,5 +67,19 @@ class Phonebook extends Component {
         )
     }
 }
+
+Phonebook.propTypes = {
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      name: PropTypes.string,
+      number: PropTypes.string,
+    })
+  ),
+  filter: PropTypes.string,
+  onSubmitHendler: PropTypes.func,
+  delete: PropTypes.func,
+  filterName: PropTypes.func,
+};
 
 export default Phonebook

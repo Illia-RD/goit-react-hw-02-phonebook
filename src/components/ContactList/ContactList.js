@@ -1,9 +1,9 @@
 import { List, Item, Btn } from 'components/ContactList/ContactList.styled';
 
-const ContactList = ({ filter, contacts, filterByName, onClickBtn }) => {
+const ContactList = ({ filterByName, onClickBtn }) => {
   return (
     <List>
-      {(filter === '' ? contacts : filterByName()).map(contact => {
+      {filterByName().map(contact => {
         return (
           <Item key={contact.id}>
             {contact.name}: {contact.number}{' '}
